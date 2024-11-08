@@ -1,0 +1,5 @@
+Lable    ddv4    dd
+
+*это коммент
+    ADD_CONST   1
+label    ADD_CONST    3

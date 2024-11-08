@@ -1,0 +1,3 @@
+/Users/singleday/Documents/вуз/5 семестр/spo/q/cmake-build-debug/CMakeFiles/q.dir
+/Users/singleday/Documents/вуз/5 семестр/spo/q/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/singleday/Documents/вуз/5 семестр/spo/q/cmake-build-debug/CMakeFiles/rebuild_cache.dir
