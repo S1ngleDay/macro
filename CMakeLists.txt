@@ -3,4 +3,6 @@ project(q C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(q main.c)
+add_executable(q main.c
+        lexer.c
+        lexer.h)

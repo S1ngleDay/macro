@@ -1,5 +1,4 @@
-Lable    ddv4    dd
-
+Lable    ddv4    dd comm
 *это коммент
     ADD_CONST   1
 label    ADD_CONST    3
