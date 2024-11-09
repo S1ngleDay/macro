@@ -1,43 +1,80 @@
 LISTING
 
-PLACE       PROGRAMME          KOP   ADDRESS      CODE
- 0000         START  1000h
- 1000     st    LDX   zero 		22 		1012 	221012
- 1003         LDA    LDA    dat 		21 		101b 	21101b
- 1006         ADDX   ADDX    wsz 		12 		1015 	121015
- 1009         STA    STA    rez 		31 		1018 	311018
- 100c         HLT    HLT    rez 		0f 		0000 	0f0000
- 100f   zero   WORD      0 		   		     	000000
- 1012    wsz   WORD      3 		   		     	000003
- 1015    rez   WORD      1 		   		     	000001
- 1018    dat   WORD      7 		   		     	000007
- 101b         WORD   WORD     11 		   		     	00000b
- 101e         END    END     st
+PLACE       PROGRAMME          opcode   ADDRESS      CODE
+ 0006          ORIG  1000h 		   		     	0003e8
+ 1000  START    LDA VALUE1 		08 		100f 	08100f
+ 1003        ADD    ADD VALUE2 		01 		1012 	011012
+ 1006        STA    STA RESULT 		18 		1015 	181015
+ 100c VALUE1    CON    200 		   		     	0000c8
+ 100f VALUE2    CON    150 		   		     	000096
+ 1012 RESULT    CON      0 		   		     	000000
+ 1015        END    END  START
 
-START ADDRESS: 1000h 	SIZE OF PROGRAMME: 22h
+START ADDRESS: 1000h 	SIZE OF PROGRAMME: 19h
 
 			Names table
         NAME         SIGH      ADDRESS
-          st            1         1000
-         LDA            1         1003
-        ADDX            1         1006
-         STA            1         1009
-         HLT            1         100c
-        zero            1         1012
-         wsz            1         1015
-         rez            1         1018
-         dat            1         101b
-        WORD            1         101e
+       START            1         1000
+         ADD            1         1003
+         STA            1         1006
+         HLT            1         1009
+      VALUE1            1         100f
+      VALUE2            1         1012
+      RESULT            1         1015
 
 			Mnemonic table
-       MNEMO  COMMAND/DIR          KOP
-        RESW            1            0
-       START            1            0
-         END            1            0
-        WORD            1            0
-         HLT            0            f
-         ADD            0           11
-        ADDX            0           12
-         LDA            0           21
-         LDX            0           22
-         STA            0           31
+       MNEMO  COMMAND/DIR       opcode
+         NOP            0            0
+         ADD            0            1
+         SUB            0            2
+         MUL            0            3
+         DIV            0            4
+         HLT            0            5
+         NUM            0            5
+        CHAR            0            5
+        SLAX            2            6
+        SRAX            3            6
+         SLA            0            6
+         SRC            5            6
+         SLC            4            6
+         SRA            1            6
+        MOVE            0            7
+         LDA            0            8
+         LD1            0            9
+         LD2            0            a
+         LD3            0            b
+         LD4            0            c
+         LD5            0            d
+         LD6            0            e
+         LDX            0            f
+        LDAN            0           10
+        LD1N            0           11
+        LD2N            0           12
+        LD3N            0           13
+        LD4N            0           14
+        LD5N            0           15
+        LD6N            0           16
+        LDXN            0           17
+         STA            0           18
+         ST1            0           19
+         ST2            0           1a
+         ST3            0           1b
+         ST4            0           1c
+         ST5            0           1d
+         ST6            0           1e
+         STX            0           1f
+         STJ            0           20
+         STZ            0           21
+         IOC            0           23
+          IN            0           24
+         OUT            0           25
+          JL            4           27
+         JLE            9           27
+         JSJ            1           27
+         JGE            7           27
+          JG            6           27
+        JNOV            3           27
+          JE            5           27
+         JNE            8           27
+         JMP            0           27
+         JOV            2           27

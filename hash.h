@@ -9,9 +9,9 @@ typedef struct HashEntryNames {
 typedef struct HashEntryMnemo {
     char* key;
     int address;
-    int sigh;
-    int size_of;
-    int KOP;
+    int index;
+    int mod;
+    int opcode;
     struct HashEntry* next;
 } HashEntryMnemo;
 
@@ -27,12 +27,12 @@ typedef struct {
 
 int hashFunction(const char* key, int size);
 
-HashEntryMnemo* createHashEntryMnemo(const char* key, int address, int sigh, int size_of, int KOP);
+HashEntryMnemo* createHashEntryMnemo(const char* key, int address, int index, int mod, int opcode);
 HashTableMnemo* createHashTableMnemo(int size);
-void insertMnemo(HashTableMnemo * table, const char* key, int address, int sigh, int size_of, int KOP);
+void insertMnemo(HashTableMnemo * table, const char* key, int address, int mod, int opcode);
 HashEntryMnemo* searchMnemo(HashTableMnemo* table, const char* key);
 void freeHashTableMnemo(HashTableMnemo* table);
-int replaceMnemo(HashTableMnemo* table, const char* key, int address, int sigh, int size_of, int KOP);
+int replaceMnemo(HashTableMnemo* table, const char* key, int address, int mod, int opcode);
 int compareEntriesMnemo(const void* a, const void* b);
 HashEntryMnemo** getAllEntriesMnemo(HashTableNames* table, int* count);
 void printSortedHashTableMnemo(FILE* file, HashTableNames* table);

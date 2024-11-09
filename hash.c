@@ -3,13 +3,13 @@
 #include <printf.h>
 #include "hash.h"
 
-HashEntryMnemo* createHashEntryMnemo(const char* key, int address, int sigh, int size_of, int KOP) {
+HashEntryMnemo* createHashEntryMnemo(const char* key, int address, int index, int mod, int opcode) {
     HashEntryMnemo * entry = (HashEntryMnemo*)malloc(sizeof(HashEntryMnemo));
     entry->key = strdup(key);
     entry->address = address;
-    entry->sigh = sigh;
-    entry->size_of = size_of;
-    entry->KOP = KOP;
+    entry->index = index;
+    entry->mod = mod;
+    entry->opcode = opcode;
     entry->next = NULL;
     return entry;
 }
@@ -31,9 +31,9 @@ int hashFunction(const char* key, int size) {
     return sum % size;
 }
 
-void insertMnemo(HashTableMnemo * table, const char* key, int address, int sigh, int size_of, int KOP) {
+void insertMnemo(HashTableMnemo * table, const char* key, int address, int mod, int opcode) {
     int index = hashFunction(key, table->size);
-    HashEntryMnemo* entry = createHashEntryMnemo(key, address, sigh, size_of, KOP);
+    HashEntryMnemo* entry = createHashEntryMnemo(key, address, index, mod, opcode);
     entry->next = table->entries[index];
     table->entries[index] = entry;
 }
@@ -50,15 +50,15 @@ HashEntryMnemo* searchMnemo(HashTableMnemo* table, const char* key) {
     return NULL;
 }
 
-int replaceMnemo(HashTableMnemo* table, const char* key, int address, int sigh, int size_of, int KOP) {
+int replaceMnemo(HashTableMnemo* table, const char* key, int address, int mod, int opcode) {
     int index = hashFunction(key, table->size);
     HashEntryMnemo* current = table->entries[index];
     while (current != NULL) {
         if (strcmp(current->key, key) == 0) {
             current->address = address;
-            current->sigh = sigh;
-            current->size_of = size_of;
-            current->KOP = KOP;
+            current->index = index;
+            current->mod = mod;
+            current->opcode = opcode;
             return 1;
         }
         current = current->next;
@@ -189,7 +189,7 @@ void printSortedHashTableNames(FILE* file, HashTableNames* table) {
 int compareEntriesMnemo(const void* a, const void* b) {
     HashEntryMnemo* entryA = *(HashEntryMnemo**)a;
     HashEntryMnemo* entryB = *(HashEntryMnemo**)b;
-    return (entryA->KOP - entryB->KOP);
+    return (entryA->opcode - entryB->opcode);
 }
 
 HashEntryMnemo** getAllEntriesMnemo(HashTableNames* table, int* count) {
@@ -219,7 +219,7 @@ void printSortedHashTableMnemo(FILE* file, HashTableNames* table) {
     HashEntryMnemo** entries = getAllEntriesMnemo(table, &count);
     qsort(entries, count, sizeof(HashEntryMnemo*), compareEntriesMnemo);
     for (int i = 0; i < count; i++) {
-        fprintf(file, "%12s %12d %12x\n", entries[i]->key, entries[i]->sigh, entries[i]->KOP);
+        fprintf(file, "%12s %12d %12x\n", entries[i]->key, entries[i]->mod, entries[i]->opcode);
     }
     free(entries);
 }

@@ -1,12 +1,15 @@
-        START    1000h
-st     LDX      zero
-        LDA      dat
-        ADDX     wsz
-        STA      rez
-        HLT
-zero   WORD     0
-wsz    WORD     3
-rez    WORD     1
-dat    WORD     7
-        WORD     11
-        END     st
+* Program to test MIX assembler
+* Initializes values, performs arithmetic, and stores results
+
+       ORIG 1000h           * Начальный адрес программы
+
+START  LDA  VALUE1         * Загружаем VALUE1 в аккумулятор
+       ADD  VALUE2         * Добавляем VALUE2
+       STA  RESULT         * Сохраняем результат в RESULT
+       HLT                 * Останавливаем программу
+
+VALUE1 CON  200            * Константа 200
+VALUE2 CON  150            * Константа 150
+RESULT CON  0              * Результат сложения, инициализируем нулем
+
+       END  START          * Конец программы и начальный адрес исполнения
