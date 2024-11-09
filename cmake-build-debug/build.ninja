@@ -61,6 +61,12 @@ build CMakeFiles/q.dir/lexer.c.o: C_COMPILER__q_unscanned_Debug /Users/singleday
   OBJECT_DIR = CMakeFiles/q.dir
   OBJECT_FILE_DIR = CMakeFiles/q.dir
 
+build CMakeFiles/q.dir/hash.c.o: C_COMPILER__q_unscanned_Debug /Users/singleday/Documents/вуз/5$ семестр/spo/q/hash.c || cmake_object_order_depends_target_q
+  DEP_FILE = CMakeFiles/q.dir/hash.c.o.d
+  FLAGS = -g -std=gnu11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk -fcolor-diagnostics
+  OBJECT_DIR = CMakeFiles/q.dir
+  OBJECT_FILE_DIR = CMakeFiles/q.dir
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target q
@@ -69,7 +75,7 @@ build CMakeFiles/q.dir/lexer.c.o: C_COMPILER__q_unscanned_Debug /Users/singleday
 #############################################
 # Link the executable q
 
-build q: C_EXECUTABLE_LINKER__q_Debug CMakeFiles/q.dir/main.c.o CMakeFiles/q.dir/lexer.c.o
+build q: C_EXECUTABLE_LINKER__q_Debug CMakeFiles/q.dir/main.c.o CMakeFiles/q.dir/lexer.c.o CMakeFiles/q.dir/hash.c.o
   FLAGS = -g -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.4.sdk
   OBJECT_DIR = CMakeFiles/q.dir
   POST_BUILD = :

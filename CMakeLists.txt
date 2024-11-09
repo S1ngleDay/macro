@@ -5,4 +5,6 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(q main.c
         lexer.c
-        lexer.h)
+        lexer.h
+        hash.c
+        hash.h)
