@@ -1,16 +1,11 @@
 * Program to test MIX assembler
 * Initializes values, performs arithmetic, and stores results
-QWERTY MACRO A, B
-    ADD A
-    STA B
-    ENDM
-
        ORIG 1000h           * Начальный адрес программы
 START  LDA  VALUE1         * Загружаем VALUE1 в аккумулятор
        ADD  VALUE2         * Добавляем VALUE2
        STA  RESULT         * Сохраняем результат в RESULT
-       QWERTY   VALUE1, VALUE2
-
+	ADD  VALUE1
+	STA VALUE2
        HLT                 * Останавливаем программу
 VALUE1 CON  200            * Константа 200
 VALUE2 CON  150            * Константа 150

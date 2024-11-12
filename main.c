@@ -4,6 +4,7 @@
 #include <string.h>
 #include "lexer.h"
 #include "hash.h"
+#include "macro.h"
 
 HashTableMnemo* initializeMnemoTable() {
     int tableSize = 64; // Задаем размер хеш-таблицы
@@ -69,6 +70,7 @@ HashTableMnemo* initializeMnemoTable() {
 }
 
 int main() {
+    FILE* in = fopen("../in.txt", "r");
     FILE* listing = fopen("../files/listing.txt", "w");
     if (listing == NULL) {
         perror("Не удалось открыть файл listing.txt");
@@ -100,8 +102,9 @@ int main() {
         fclose(hex_dump);
         return EXIT_FAILURE;
     }
-    get_line_t(a);
-
+    macro_process(in);
+    FILE* out = fopen("../files/output.txt", "r");
+    get_line_t(out, a);
     HashTableNames *names = createHashTableNames(50);
     if (names == NULL) {
         perror("Не удалось создать таблицу имен");
@@ -208,6 +211,8 @@ int main() {
     fclose(listing);
     fclose(bin_dump);
     fclose(hex_dump);
+    fclose(in);
+    fclose(out);
 
     return 0;
 }

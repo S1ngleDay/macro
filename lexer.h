@@ -1,3 +1,6 @@
+#ifndef LEXER_H
+#define LEXER_H
+
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
@@ -20,4 +23,6 @@ typedef struct {
 line_t * create_line_t();
 void freeLineTable(line_t * table);
 void add_entry(line_t *table, char *label, char *mnemonic, char *operand, char *comment);
-void get_line_t(line_t *line_table);
+void get_line_t(FILE* in, line_t *line_table);
+
+#endif // LEXER_H

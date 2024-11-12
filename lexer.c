@@ -50,13 +50,12 @@ void add_entry(line_t *table, char *label, char *mnemonic, char *operand, char *
     table->size++;
 }
 
-void get_line_t(line_t *line_table) {
+void get_line_t(FILE* in, line_t *line_table) {
     char *arr[4] = {NULL, NULL, NULL, NULL};  // Для хранения label, mnemonic, operand, comment
 
     char input_string[MAX_LINE_LENGTH];
     char *token;
 
-    FILE *in = fopen("../in.txt", "r");
     if (in == NULL) {
         perror("Не удалось открыть файл");
         return;
@@ -117,6 +116,4 @@ void get_line_t(line_t *line_table) {
 
         add_entry(line_table, arr[0], arr[1], arr[2], arr[3]);
     }
-
-    fclose(in);
 }
