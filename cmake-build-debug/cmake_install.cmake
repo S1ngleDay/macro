@@ -1,4 +1,4 @@
-# Install script for directory: /Users/singleday/Documents/вуз/5 семестр/spo/q
+# Install script for directory: /Users/singleday/Documents/вуз/5 семестр/spo/macro
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/singleday/Documents/вуз/5 семестр/spo/q/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/singleday/Documents/вуз/5 семестр/spo/macro/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

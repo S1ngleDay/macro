@@ -30,16 +30,16 @@ void freeLineTable(line_t *table) {
     free(table);
 }
 
-void add_entry(line_t *table, char *label, char *mnemonic, char *operand, char *comment) {
+void add_entry(line_t *table, const char *label, const char *mnemonic, const char *operand, const char *comment) {
     line_e *entry = (line_e *)malloc(sizeof(line_e));
     if (entry == NULL) {
         perror("Failed to allocate memory for line_e");
         exit(EXIT_FAILURE);
     }
-    entry->label = strdup(label);
-    entry->mnemonic = strdup(mnemonic);
-    entry->operand = strdup(operand);
-    entry->comment = strdup(comment);
+    entry->label = strdup(label ? label : "");
+    entry->mnemonic = strdup(mnemonic ? mnemonic : "");
+    entry->operand = strdup(operand ? operand : "");
+    entry->comment = strdup(comment ? comment : "");
 
     table->entries = (line_e **)realloc(table->entries, sizeof(line_e *) * (table->size + 1));
     if (table->entries == NULL) {
@@ -50,73 +50,66 @@ void add_entry(line_t *table, char *label, char *mnemonic, char *operand, char *
     table->size++;
 }
 
-void get_line_t(line_t *line_table) {
-    char *arr[4] = {NULL, NULL, NULL, NULL};  // Для хранения label, mnemonic, operand, comment
-
+void get_line_t(FILE* in, line_t *line_table) {
     char input_string[MAX_LINE_LENGTH];
-    char *token;
+    char *label = NULL, *mnemonic = NULL, *operand = NULL, *comment = NULL;
 
-    FILE *in = fopen("../in.txt", "r");
     if (in == NULL) {
-        perror("Не удалось открыть файл");
+        perror("Failed to open file");
         return;
     }
 
     while (fgets(input_string, MAX_LINE_LENGTH, in) != NULL) {
-        input_string[strcspn(input_string, "\n")] = '\0';  // Удаляем символ новой строки
+        input_string[strcspn(input_string, "\n")] = '\0';
 
         // Пропускаем пустые строки и строки, состоящие только из пробелов
-        if (input_string[0] == '\0' || strspn(input_string, " \t") == strlen(input_string)) {
-            continue;
-        }
+        if (input_string[0] == '\0' || strspn(input_string, " \t") == strlen(input_string)) continue;
 
         // Если строка начинается с '*', то вся строка - это комментарий
         if (input_string[0] == '*') {
-            arr[3] = input_string + 1;  // Сохраняем комментарий, пропуская символ '*'
-            arr[0] = arr[1] = arr[2] = "";  // Метка, мнемоника и операнд пустые
+            label = mnemonic = operand = "";  // Метка, мнемоника и операнд пустые
+            comment = input_string + 1;  // Сохраняем комментарий, пропуская символ '*'
         } else {
-            char *rest = input_string;
+            char *token = input_string;
 
-            // Разделяем строку на токены
-            if (isspace(input_string[0])) {
-                // Если строка начинается с пробела или табуляции, то это мнемоника
-                token = strtok_r(rest, " \t", &rest);
+            // Ищем первую часть как метку (если начинается с буквы)
+            if (isalpha(*token)) {
+                label = token;
+                while (*token && !isspace(*token)) token++;
+                if (*token) *token++ = '\0';  // Завершаем метку нулем и переходим к следующему токену
             } else {
-                token = strtok_r(rest, " \t", &rest);
-                if (token && isalpha(token[0])) {
-                    arr[0] = token;  // Метка
-                    token = strtok_r(NULL, " \t", &rest);  // Следующий токен - мнемоника
+                label = "";  // Нет метки
+            }
+
+            // Пропускаем пробелы и табуляции
+            while (*token && isspace(*token)) token++;
+
+            // Следующий токен — мнемоника
+            mnemonic = token;
+            while (*token && !isspace(*token)) token++;
+            if (*token) *token++ = '\0';
+
+            // Пропускаем пробелы и табуляции
+            while (*token && isspace(*token)) token++;
+
+            // Следующий токен — операнд
+            operand = token;
+            while (*token && *token != '*' && *token != ';' && !isspace(*token)) token++;
+            if (*token) {
+                if (*token == '*' || *token == ';') {
+                    *token++ = '\0';  // Завершаем операнд нулем и переходим к комментарию
+                    comment = token;
+                } else {
+                    *token++ = '\0';  // Просто завершаем операнд
+                    while (*token && isspace(*token)) token++;
+                    comment = (*token == '*' || *token == ';') ? token + 1 : "";  // Проверяем, начинается ли комментарий
                 }
-            }
-
-            if (token != NULL) {
-                arr[1] = token;  // Мнемоника
-                token = strtok_r(NULL, " \t", &rest);  // Следующий токен - операнд
-            }
-
-            if (token != NULL) {
-                arr[2] = token;  // Операнд
-                // Обработка комментария, если он есть
-                if (rest != NULL) {
-                    while (*rest == ' ' || *rest == '\t') {  // Пропускаем пробелы
-                        rest++;
-                    }
-                    if (*rest != '\0') {
-                        arr[3] = rest;  // Комментарий
-                    }
-                } else arr[3] = "";
+            } else {
+                comment = "";
             }
         }
 
-        // Добавляем запись в таблицу, проверяя, что все данные корректны
-        if (arr[0] == NULL) arr[0] = "";  // Убедимся, что метка существует
-        if (arr[1] == NULL) arr[1] = "";  // Убедимся, что мнемоника существует
-        if (arr[2] == NULL) arr[2] = "";  // Убедимся, что операнд существует
-        if (arr[3] == NULL) arr[3] = "";  // Убедимся, что комментарий существует
-
-
-        add_entry(line_table, arr[0], arr[1], arr[2], arr[3]);
+        // Добавляем запись в таблицу
+        add_entry(line_table, label, mnemonic, operand, comment);
     }
-
-    fclose(in);
 }

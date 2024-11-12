@@ -1,3 +1,8 @@
+#ifndef HASH_H
+#define HASH_H
+
+#include "lexer.h"
+
 typedef struct HashEntryNames {
     char* key;
     int address;
@@ -25,6 +30,9 @@ typedef struct {
     int size;
 } HashTableNames;
 
+
+
+
 int hashFunction(const char* key, int size);
 
 HashEntryMnemo* createHashEntryMnemo(const char* key, int address, int index, int mod, int opcode);
@@ -46,3 +54,5 @@ int replaceNames(HashTableNames* table, const char* key, int address, int sigh, 
 int compareEntriesNames(const void* a, const void* b);
 HashEntryNames** getAllEntriesNames(HashTableNames* table, int* count);
 void printSortedHashTableNames(FILE* file, HashTableNames* table);
+
+#endif

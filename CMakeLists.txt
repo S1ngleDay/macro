@@ -7,4 +7,7 @@ add_executable(q main.c
         lexer.c
         lexer.h
         hash.c
-        hash.h)
+        hash.h
+        macro.c
+        macro.h
+)

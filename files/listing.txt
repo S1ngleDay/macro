@@ -1,26 +1,24 @@
 LISTING
 
 PLACE       PROGRAMME          opcode   ADDRESS      CODE
- 0006          ORIG  1000h 		   		     	0003e8
- 1000  START    LDA VALUE1 		08 		100f 	08100f
- 1003        ADD    ADD VALUE2 		01 		1012 	011012
- 1006        STA    STA RESULT 		18 		1015 	181015
- 100c VALUE1    CON    200 		   		     	0000c8
- 100f VALUE2    CON    150 		   		     	000096
- 1012 RESULT    CON      0 		   		     	000000
- 1015        END    END  START
+ 000a          ORIG  1000h 		   		     	0003e8
+ 1000  START    LDA VALUE1 		08 		1023 	081023
+ 1005           ADD   =10= 		01 		100a 	01100a
+ 100a           STA RESULT 		18 		102d 	18102d
+ 100f           ADD VALUE1 		01 		1023 	011023
+ 1014           STA VALUE2 		18 		1028 	181028
+ 101e VALUE1    CON    200 		   		     	0000c8
+ 1023 VALUE2    CON    150 		   		     	000096
+ 1028 RESULT    CON      0 		   		     	000000
+ 102d           END  START
 
-START ADDRESS: 1000h 	SIZE OF PROGRAMME: 19h
+START ADDRESS: 1000h 	SIZE OF PROGRAMME: 32h
 
 			Names table
         NAME         SIGH      ADDRESS
-       START            1         1000
-         ADD            1         1003
-         STA            1         1006
-         HLT            1         1009
-      VALUE1            1         100f
-      VALUE2            1         1012
-      RESULT            1         1015
+      VALUE1            1         1023
+      VALUE2            1         1028
+      RESULT            1         102d
 
 			Mnemonic table
        MNEMO  COMMAND/DIR       opcode
@@ -78,3 +76,7 @@ START ADDRESS: 1000h 	SIZE OF PROGRAMME: 19h
          JNE            8           27
          JMP            0           27
          JOV            2           27
+
+			Literal Table
+     LITERAL        VALUE      ADDRESS
+        =10=           10         100a
